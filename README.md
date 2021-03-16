@@ -1,32 +1,28 @@
 <h1 align="center">
-  <img alt="GoStack" src="https://res.cloudinary.com/vilmarbatista/image/upload/v1614284469/Development/FiNance/logo_digivp.svg" width="200px" />
+  <img alt="Vilmar Batista" src="https://res.cloudinary.com/vilmarbatista/image/upload/v1615811000/Development/GoStack/Wallpaper_Keep_Coding_-_2560x1080_kbn7wt.jpg" width="100%" />
 </h1>
 
 <h3 align="center">
-  ReactJS Application for FiNance project
+  Web app para gerenciamento financeiro
 </h3>
 
-<p align="center">The best way to schedule your service!</p>
+<p align="center">Projeto teste Code7</p>
 
 <p align="center">
-  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/vilmarsitiodigital/finance-web?color=%23FF9000">
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/vilmarsitiodigital/finance-api?color=9f97d2">
 
-  <a href="https://www.linkedin.com/in/vilmarbatista/" target="_blank" rel="noopener noreferrer">
-    <img alt="Made by" src="https://img.shields.io/badge/made%20by-vilmar-orange">
-  </a>
-
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/vilmarsitiodigital/finance-web?color=%23FF9000">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/vilmarsitiodigital/finance-api?color=9f97d2">
 
   <a href="https://github.com/vilmarsitiodigital/finance-api/commits/main">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/vilmarsitiodigital/finance-web?color=%23FF9000">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/vilmarsitiodigital/finance-api?color=9f97d2">
   </a>
 
   <a href="https://github.com/vilmarsitiodigital/finance-api/issues">
-    <img alt="Repository issues" src="https://img.shields.io/github/issues/vilmarsitiodigital/finance-web?color=%23FF9000">
+    <img alt="Repository issues" src="https://img.shields.io/github/issues/vilmarsitiodigital/finance-api?color=9f97d2">
   </a>
 
-  <a href="https://github.com/vilmarsitiodigital/finance-web/blob/main/LICENSE">
-    <img alt="GitHub" src="https://img.shields.io/github/license/vilmarsitiodigital/finance-web?color=%23FF9000">
+  <a href="https://github.com/vilmarsitiodigital/finance-api/blob/main/LICENSE">
+    <img alt="GitHub" src="https://img.shields.io/github/license/vilmarsitiodigital/finance-api?color=9f97d2">
   </a>
 </p>
 
@@ -44,12 +40,13 @@
   <img alt="Layout" src="https://res.cloudinary.com/vilmarbatista/image/upload/v1614295101/Development/FiNance/financeweb_ze0rrq.gif">
 </p>
 
-## 💇🏻‍♂️ About the project
+## 💵 About the project
 
-Soon
+O objetivo desse projeto é o relacionamento de dívidas com nossos clientes (usuários do JSONPlaceholder). 
 
-To see the **api**, click here: [FiNance Rest API](https://github.com/vilmarsitiodigital/finance-api)</br>
-To see the **mobile client**, click here: [FiNance Mobile](https://github.com/vilmarsitiodigital/finance-mobile)
+Cada usuário é uma pessoa com dívidas, na qual iremos fazer o cadastro no nosso sistema.
+
+Para acessar o **web client**, clique aqui: [Finance Web](https://github.com/vilmarsitiodigital/finance-web)<br />
 
 ## 🚀 Technologies
 
