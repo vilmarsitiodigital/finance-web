@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { format, parseISO } from 'date-fns';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,38 +11,71 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 import { FiArrowLeft, FiEdit, FiTrash2 } from 'react-icons/fi';
+import api from '../../services/api';
 
 import * as S from './styles';
 
 import Button from '../../components/Button';
 
-interface IRows {
+interface IUsers {
   id: number;
-  motivo: string;
-  valor: number;
-  data: string;
+  name: string;
+}
+
+interface IDebit {
+  id: string;
+  user_id: number;
+  value: number;
+  reason: string;
+  date: string;
+  user: IUsers | undefined;
+}
+
+interface UserParams {
+  user_id: string;
 }
 
 const Dashboard: React.FC = () => {
-  const heads = ['Motivo', 'Valor', 'Data', ''];
-  const [rows, setRows] = useState<IRows[]>([]);
-
+  const params = useParams<UserParams>();
+  const [users, setUsers] = useState<IUsers[]>([]);
+  const [debits, setDebits] = useState<IDebit[]>([]);
+  const [title, setTitle] = useState('');
   useEffect(() => {
-    setRows([
-      {
-        id: 1,
-        motivo: 'Empréstimo',
-        valor: 10.5,
-        data: '01/01/2011',
-      },
-      {
-        id: 2,
-        motivo: 'Pagamento de Aluguel',
-        valor: 10.5,
-        data: '01/01/2011',
-      },
-    ]);
-  }, []);
+    const arrayUsuarios: IUsers[] = users;
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => response.json())
+      .then(json => {
+        json.forEach((j: IUsers) => {
+          arrayUsuarios.push(j);
+        });
+        setUsers(arrayUsuarios);
+      })
+      .then(() => {
+        api
+          .get<IDebit[]>('/debits', {
+            params: {
+              user_id: params.user_id,
+            },
+          })
+          .then(response => {
+            const debitsFormatted = response.data.map(debit => ({
+              ...debit,
+              user: users.find(u => u.id === debit.user_id),
+              date: format(parseISO(debit.date), 'dd/MM/yyyy'),
+            }));
+
+            debitsFormatted.forEach(e => {
+              if (e.user?.name) {
+                setTitle(e.user?.name);
+              }
+            });
+
+            setDebits(debitsFormatted);
+          });
+      });
+  }, [params.user_id, users]);
+
+  const heads = ['Motivo', 'Valor', 'Data', ''];
 
   return (
     <S.Container>
@@ -56,7 +90,7 @@ const Dashboard: React.FC = () => {
                 </span>
               </Link>
             </small>
-            Leanne Graham
+            {title}
           </h1>
 
           <Link to="/debit">
@@ -76,14 +110,14 @@ const Dashboard: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map(row => (
+              {debits.map(row => (
                 <TableRow key={row.id}>
-                  <TableCell align="left">{row.motivo}</TableCell>
-                  <TableCell align="left">{row.valor}</TableCell>
-                  <TableCell align="left">{row.data}</TableCell>
+                  <TableCell align="left">{row.reason}</TableCell>
+                  <TableCell align="left">{row.value}</TableCell>
+                  <TableCell align="left">{row.date}</TableCell>
                   <TableCell align="center">
                     <S.Actions>
-                      <Link to="/">
+                      <Link to={`/debit/${row.id}`}>
                         <span>
                           <FiEdit size={20} />
                         </span>

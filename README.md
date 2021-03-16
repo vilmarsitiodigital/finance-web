@@ -1,28 +1,32 @@
+<h1 align="center">
+  <img alt="GoStack" src="https://res.cloudinary.com/vilmarbatista/image/upload/v1614284469/Development/FiNance/logo_digivp.svg" width="200px" />
+</h1>
+
 <h3 align="center">
-  ReactJS Application for Code7
+  ReactJS Application for FiNance project
 </h3>
 
-<p align="center">Evaluation Project Code7</p>
+<p align="center">The best way to schedule your service!</p>
 
 <p align="center">
-  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/vilmarsitiodigital/finance?color=%2300d8ff">
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/vilmarsitiodigital/finance-web?color=%23FF9000">
 
   <a href="https://www.linkedin.com/in/vilmarbatista/" target="_blank" rel="noopener noreferrer">
-    <img alt="Made by" src="https://img.shields.io/badge/made%20by-vilmar-00d8ff">
+    <img alt="Made by" src="https://img.shields.io/badge/made%20by-vilmar-orange">
   </a>
 
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/vilmarsitiodigital/finance?color=%2300d8ff">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/vilmarsitiodigital/finance-web?color=%23FF9000">
 
-  <a href="https://github.com/vilmarsitiodigital/gobarber-api/commits/main">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/vilmarsitiodigital/finance?color=%2300d8ff">
+  <a href="https://github.com/vilmarsitiodigital/finance-api/commits/main">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/vilmarsitiodigital/finance-web?color=%23FF9000">
   </a>
 
-  <a href="https://github.com/vilmarsitiodigital/gobarber-api/issues">
-    <img alt="Repository issues" src="https://img.shields.io/github/issues/vilmarsitiodigital/finance?color=%2300d8ff">
+  <a href="https://github.com/vilmarsitiodigital/finance-api/issues">
+    <img alt="Repository issues" src="https://img.shields.io/github/issues/vilmarsitiodigital/finance-web?color=%23FF9000">
   </a>
 
-  <a href="https://github.com/vilmarsitiodigital/gobarber-web/blob/main/LICENSE">
-    <img alt="GitHub" src="https://img.shields.io/github/license/vilmarsitiodigital/finance?color=%2300d8ff">
+  <a href="https://github.com/vilmarsitiodigital/finance-web/blob/main/LICENSE">
+    <img alt="GitHub" src="https://img.shields.io/github/license/vilmarsitiodigital/finance-web?color=%23FF9000">
   </a>
 </p>
 
@@ -37,39 +41,15 @@
 </br>
 
 <p align="center">
-  <img width="100%" alt="finance" src="https://res.cloudinary.com/vilmarbatista/image/upload/v1615227258/Development/App-ideas/captured_ytk5dx.gif" />
+  <img alt="Layout" src="https://res.cloudinary.com/vilmarbatista/image/upload/v1614295101/Development/FiNance/financeweb_ze0rrq.gif">
 </p>
 
-## 👨🏼‍💻 About the project
+## 💇🏻‍♂️ About the project
 
-<a target="_blank" href="https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/finance-App.md">**Tier:** 1-Beginner</a>
+Soon
 
-Binary is the number system all digital computers are based on.
-Therefore it's important for developers to understand binary, or base 2,
-mathematics. The purpose of finance is to provide practice and
-understanding of how binary calculations.
-
-finance allows the user to enter strings of up to 8 binary digits, 0's
-and 1's, in any sequence and then displays its decimal equivalent.
-
-This challenge requires that the developer implementing it follow these
-constraints:
-
-- Arrays may not be used contain the binary digits entered by the user
-- Determining the decimal equivalent of a particular binary digit in the
-  sequence must be calculated using a single mathematical function, for
-  example the natural logarithm. It's up to you to figure out which function
-  to use.
-
-## User Stories
-
-- [x] ~User can enter up to 8 binary digits in one input field~
-- [x] ~User must be notified if anything other than a 0 or 1 was entered~
-- [x] ~User views the results in a single output field containing the decimal (base 10) equivalent of the the binary number that was entered~
-
-## Bonus features
-
-- [x] ~User can enter a variable number of binary digits~
+To see the **api**, click here: [FiNance Rest API](https://github.com/vilmarsitiodigital/finance-api)</br>
+To see the **mobile client**, click here: [FiNance Mobile](https://github.com/vilmarsitiodigital/finance-mobile)
 
 ## 🚀 Technologies
 
@@ -79,8 +59,14 @@ Technologies that I used to develop this web client
 - [TypeScript](https://www.typescriptlang.org/)
 - [React Router DOM](https://reacttraining.com/react-router/)
 - [React Icons](https://react-icons.netlify.com/#/)
+- [UnForm](https://unform.dev/) [💜](https://rocketseat.com.br/)
+- [Yup](https://github.com/jquense/yup)
 - [Styled Components](https://styled-components.com/)
 - [Polished](https://github.com/styled-components/polished)
+- [Axios](https://github.com/axios/axios)
+- [Husky](https://github.com/typicode/husky)
+- [Commitlint](https://github.com/conventional-changelog/commitlint)
+- [Commitizen](https://github.com/commitizen/cz-cli)
 - [Eslint](https://eslint.org/)
 - [Prettier](https://prettier.io/)
 - [EditorConfig](https://editorconfig.org/)
@@ -89,12 +75,12 @@ Technologies that I used to develop this web client
 
 ### Requirements
 
-- Have this application's [API](https://github.com/vilmarsitiodigital/finance) running
+- Have this application's [API](https://github.com/vilmarsitiodigital/finance-api) running
 
 **Clone the project and access the folder**
 
 ```bash
-$ git clone https://github.com/vilmarsitiodigital/finance.git && cd finance
+$ git clone https://github.com/vilmarsitiodigital/finance-web.git && cd finance-web
 ```
 
 **Follow the steps below**
@@ -117,14 +103,14 @@ $ yarn start
 # Fork using GitHub official command line
 # If you don't have the GitHub CLI, use the web site to do that.
 
-$ gh repo fork vilmarsitiodigital/finance
+$ gh repo fork vilmarsitiodigital/finance-web
 ```
 
 **Follow the steps below**
 
 ```bash
 # Clone your fork
-$ git clone your-fork-url && cd finance
+$ git clone your-fork-url && cd finance-web
 
 # Create a branch with your feature
 $ git checkout -b my-feature

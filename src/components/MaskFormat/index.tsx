@@ -1,21 +1,16 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-  InputHTMLAttributes,
-} from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import NumberFormat, { NumberFormatProps } from 'react-number-format';
 import { FiAlertCircle } from 'react-icons/fi';
 import { useField } from '@unform/core';
 
 import { Container, Error } from './styles';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends NumberFormatProps {
   name: string;
   containerStyle?: React.CSSProperties;
 }
 
-const Input: React.FC<InputProps> = ({
+const MaskFormat: React.FC<InputProps> = ({
   name,
   containerStyle = {},
   ...rest
@@ -56,14 +51,14 @@ const Input: React.FC<InputProps> = ({
           <FiAlertCircle color="c53030" size={20} />
         </Error>
       )}
-      <input
+      <NumberFormat
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
         defaultValue={defaultValue}
-        ref={inputRef}
+        getInputRef={inputRef}
         {...rest}
       />
     </Container>
   );
 };
-export default Input;
+export default MaskFormat;

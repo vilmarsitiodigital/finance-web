@@ -60,8 +60,6 @@ export default createGlobalStyle`
         border-radius: 50%;
         background-color: #d9d9d9;
     }
-
-
-
   }
+
 `;

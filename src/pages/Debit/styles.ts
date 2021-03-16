@@ -3,6 +3,10 @@ import { shade } from 'polished';
 
 import backgroundImg from '../../assets/finance_bg.jpeg';
 
+interface ContainerProps {
+  isErrored: boolean;
+}
+
 export const Container = styled.div`
   height: 100vh;
   display: flex;
@@ -87,4 +91,13 @@ export const Background = styled.div`
   background: url(${backgroundImg}) no-repeat center;
   background-size: cover;
   border-right: 5px solid #6e6893;
+`;
+
+export const ContainerSelect = styled.div<ContainerProps>`
+  border: 2px solid #dde1e4;
+  background: #ffffff;
+  padding: 0;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 30px;
 `;
