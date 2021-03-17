@@ -36,17 +36,13 @@
 
 </br>
 
-<p align="center">
-  <img alt="Layout" src="https://res.cloudinary.com/vilmarbatista/image/upload/v1614295101/Development/FiNance/financeweb_ze0rrq.gif">
-</p>
-
 ## 💵 About the project
 
 O objetivo desse projeto é o relacionamento de dívidas com nossos clientes (usuários do JSONPlaceholder). 
 
 Cada usuário é uma pessoa com dívidas, na qual iremos fazer o cadastro no nosso sistema.
 
-Para acessar o **web client**, clique aqui: [Finance Web](https://github.com/vilmarsitiodigital/finance-web)<br />
+Para acessar a **api**, clique aqui: [Finance Api](https://github.com/vilmarsitiodigital/finance-api)<br />
 
 ## 🚀 Technologies
 
