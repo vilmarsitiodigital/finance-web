@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,12 +7,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
 import { FiZoomIn, FiTrash2 } from 'react-icons/fi';
 import api from '../../services/api';
 
 import * as S from './styles';
-
 import Button from '../../components/Button';
 
 interface IUsers {
@@ -21,40 +19,55 @@ interface IUsers {
 }
 
 interface IDebit {
-  id: string;
+  id: number;
   user_id: number;
   value: number;
-  reason: string;
-  date: Date;
-  user: IUsers | undefined;
+  name: string;
 }
 
 const Dashboard: React.FC = () => {
-  const [users, setUsers] = useState<IUsers[]>([]);
   const [debits, setDebits] = useState<IDebit[]>([]);
   useEffect(() => {
-    const arrayUsuarios: IUsers[] = users;
     fetch('https://jsonplaceholder.typicode.com/users')
       .then(response => response.json())
-      .then(json => {
-        json.forEach((j: IUsers) => {
-          arrayUsuarios.push(j);
-        });
-        setUsers(arrayUsuarios);
-      })
-      .then(() => {
-        api.get<IDebit[]>('/debits').then(response => {
-          const debitsFormatted = response.data.map(debit => ({
-            ...debit,
-            user: users.find(u => u.id === debit.user_id),
-          }));
+      .then(async (responseUsers: IUsers[]) => {
+        const { data: responseDebits } = await api.get<IDebit[]>('/debits');
+        const ids: number[] = [];
+        const result: IDebit[] = [];
 
-          setDebits(debitsFormatted);
+        responseDebits.forEach(({ user_id, value }) => {
+          if (user_id) {
+            const idSelecionado = ids.indexOf(user_id);
+            if (!result[idSelecionado]) {
+              ids.push(user_id);
+              const user = responseUsers.find(({ id }) => id === user_id);
+              if (user) {
+                result.push({
+                  id: user?.id,
+                  user_id,
+                  value,
+                  name: user.name,
+                });
+              }
+            } else {
+              result[idSelecionado].value += value;
+            }
+          }
         });
+        setDebits(result);
       });
-  }, [users]);
+  }, []);
 
   const heads = ['Cliente', 'Dívida', ''];
+
+  const handleDelete = useCallback(
+    (user_id: number) => {
+      api.delete(`/debits/all/${user_id}`);
+      const newDebits = debits.filter(d => d.user_id !== user_id);
+      setDebits(newDebits);
+    },
+    [debits],
+  );
 
   return (
     <S.Container>
@@ -84,7 +97,7 @@ const Dashboard: React.FC = () => {
             <TableBody>
               {debits.map(row => (
                 <TableRow key={row.id}>
-                  <TableCell align="left">{row.user?.name}</TableCell>
+                  <TableCell align="left">{row.name}</TableCell>
                   <TableCell align="left">{row.value}</TableCell>
                   <TableCell align="center">
                     <S.Actions>
@@ -93,11 +106,14 @@ const Dashboard: React.FC = () => {
                           <FiZoomIn size={20} />
                         </span>
                       </Link>
-                      <Link to="/">
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(row.user_id)}
+                      >
                         <span>
                           <FiTrash2 size={20} />
                         </span>
-                      </Link>
+                      </button>
                     </S.Actions>
                   </TableCell>
                 </TableRow>

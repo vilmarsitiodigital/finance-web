@@ -60,6 +60,31 @@ export default createGlobalStyle`
         border-radius: 50%;
         background-color: #d9d9d9;
     }
+
+
+    & button {
+      text-align: center;
+      display: inline-block;
+      border: none;
+      background: none;
+
+      & span {
+        width: 35px;
+        height: 35px;
+        display: block;
+        padding: 5px;
+      }
+
+      & svg {
+        color: #626f82;
+      }
+    }
+
+    & button:hover span {
+        border-radius: 50%;
+        background-color: #d9d9d9;
+    }
+
   }
 
 `;

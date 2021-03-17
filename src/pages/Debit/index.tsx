@@ -5,6 +5,7 @@ import { Form } from '@unform/web';
 import * as Yup from 'yup';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import Select from 'react-select';
+import { format, parseISO } from 'date-fns';
 import api from '../../services/api';
 
 import { useToast } from '../../hooks/toast';
@@ -33,12 +34,12 @@ interface IDebit {
   value: number;
   reason: string;
   date: string;
-  user: Options | undefined;
+  user?: Options;
 }
 
 interface Options {
-  value: number;
-  label: string;
+  value?: number;
+  label?: string;
 }
 
 interface DebitParams {
@@ -53,13 +54,9 @@ const Debit: React.FC = () => {
 
   const [debit, setDebit] = useState<IDebit>();
 
-  const [selectedOption, setSelectedOption] = useState(null);
-  const handleChangeSelect = useCallback(e => {
-    if (e) {
-      setSelectedOption(e.value);
-    } else {
-      setSelectedOption(null);
-    }
+  const [selectedOption, setSelectedOption] = useState<Options>({} as Options);
+  const handleChangeSelect = useCallback(option => {
+    setSelectedOption(option);
   }, []);
 
   const [options, setOptions] = useState<Options[]>([]);
@@ -75,24 +72,20 @@ const Debit: React.FC = () => {
       })
       .then(() => {
         if (params.id) {
-          api
-            .get<IDebit>(`/debits/show/${params.id}`)
-            .then(response => {
-              const debitFormatted = {
-                ...response.data,
-                user: options.find(u => u.value === response.data.user_id),
-              };
-              setDebit(debitFormatted);
-            })
-            .then(() => {
-              // console.log(debit);
-              if (debit?.date) {
-                // setSelectedDate(format(parseISO(debit.date), 'dd/MM/yyyy'));
-              }
-              if (debit?.user_id) {
-                // setSelectedOption(debit.user_id.toString());
-              }
-            });
+          api.get<IDebit>(`/debits/show/${params.id}`).then(response => {
+            const debitFormatted = {
+              ...response.data,
+              date: format(parseISO(response.data.date), 'dd/MM/yyyy'),
+              user: options.find(u => u.value === response.data.user_id),
+            };
+            setDebit(debitFormatted);
+
+            const optSelected = {
+              value: debitFormatted.user_id,
+              label: debitFormatted?.user?.label,
+            } as Options;
+            setSelectedOption(optSelected);
+          });
         }
       });
   }, [debit?.date, debit?.user_id, options, params.id]);
@@ -116,7 +109,7 @@ const Debit: React.FC = () => {
         );
 
         const formData = {
-          user_id: Number(selectedOption),
+          user_id: selectedOption.value,
           reason,
           value: valorFormatado,
           date,
@@ -177,7 +170,9 @@ const Debit: React.FC = () => {
                 name="usuario_id"
                 options={options}
                 isClearable
-                // value={selectedOption}
+                {...('value' in selectedOption
+                  ? { value: selectedOption }
+                  : {})}
                 onChange={handleChangeSelect}
               />
             </S.ContainerSelect>
@@ -192,7 +187,7 @@ const Debit: React.FC = () => {
               value={debit?.value}
             />
             <MaskFormat
-              // value={selectedDate}
+              {...(debit?.date ? { value: debit?.date } : {})}
               placeholder="Data"
               format="##/##/####"
               name="date"

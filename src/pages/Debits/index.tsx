@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 
@@ -77,6 +77,15 @@ const Dashboard: React.FC = () => {
 
   const heads = ['Motivo', 'Valor', 'Data', ''];
 
+  const handleDelete = useCallback(
+    (id: string) => {
+      api.delete(`/debits/${id}`);
+      const newDebits = debits.filter(d => d.id !== id);
+      setDebits(newDebits);
+    },
+    [debits],
+  );
+
   return (
     <S.Container>
       <S.Background />
@@ -122,11 +131,14 @@ const Dashboard: React.FC = () => {
                           <FiEdit size={20} />
                         </span>
                       </Link>
-                      <Link to="/">
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(row.id)}
+                      >
                         <span>
                           <FiTrash2 size={20} />
                         </span>
-                      </Link>
+                      </button>
                     </S.Actions>
                   </TableCell>
                 </TableRow>
