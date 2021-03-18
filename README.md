@@ -37,7 +37,7 @@
 </br>
 
 <p align="center">
-  <img alt="Layout" src="https://res.cloudinary.com/vilmarbatista/image/upload/v1616087050/Development/Agiotech/agiotech_cjzqob.gif">
+  <img alt="Layout" src="https://res.cloudinary.com/vilmarbatista/image/upload/v1616090123/Development/Agiotech/preview_foshm2.gif">
 </p>
 
 ## 💵 About the project
