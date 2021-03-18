@@ -36,6 +36,10 @@
 
 </br>
 
+<p align="center">
+  <img alt="Layout" src="https://res.cloudinary.com/vilmarbatista/image/upload/v1616087050/Development/Agiotech/agiotech_cjzqob.gif">
+</p>
+
 ## 💵 About the project
 
 O objetivo desse projeto é o relacionamento de dívidas com nossos clientes (usuários do JSONPlaceholder). 
