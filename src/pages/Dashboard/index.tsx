@@ -58,8 +58,6 @@ const Dashboard: React.FC = () => {
       });
   }, []);
 
-  const heads = ['Cliente', 'Dívida', ''];
-
   const handleDelete = useCallback(
     (user_id: number) => {
       api.delete(`/debits/all/${user_id}`);
@@ -68,6 +66,8 @@ const Dashboard: React.FC = () => {
     },
     [debits],
   );
+
+  const heads = ['Cliente', 'Dívida', ''];
 
   return (
     <S.Container>
@@ -95,29 +95,37 @@ const Dashboard: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {debits.map(row => (
-                <TableRow key={row.id}>
-                  <TableCell align="left">{row.name}</TableCell>
-                  <TableCell align="left">{row.value}</TableCell>
-                  <TableCell align="center">
-                    <S.Actions>
-                      <Link to={`/debits/${row.user_id}`}>
-                        <span>
-                          <FiZoomIn size={20} />
-                        </span>
-                      </Link>
-                      <button
-                        type="button"
-                        onClick={() => handleDelete(row.user_id)}
-                      >
-                        <span>
-                          <FiTrash2 size={20} />
-                        </span>
-                      </button>
-                    </S.Actions>
+              {debits.length > 0 ? (
+                debits.map(row => (
+                  <TableRow key={row.id}>
+                    <TableCell align="left">{row.name}</TableCell>
+                    <TableCell align="left">{row.value}</TableCell>
+                    <TableCell align="center">
+                      <S.Actions>
+                        <Link to={`/debits/${row.user_id}`}>
+                          <span>
+                            <FiZoomIn size={20} />
+                          </span>
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() => handleDelete(row.user_id)}
+                        >
+                          <span>
+                            <FiTrash2 size={20} />
+                          </span>
+                        </button>
+                      </S.Actions>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={6} align="center">
+                    Nenhum registro encontrado
                   </TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
         </TableContainer>

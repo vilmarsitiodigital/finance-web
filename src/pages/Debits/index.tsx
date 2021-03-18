@@ -119,30 +119,38 @@ const Dashboard: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {debits.map(row => (
-                <TableRow key={row.id}>
-                  <TableCell align="left">{row.reason}</TableCell>
-                  <TableCell align="left">{row.value}</TableCell>
-                  <TableCell align="left">{row.date}</TableCell>
-                  <TableCell align="center">
-                    <S.Actions>
-                      <Link to={`/debit/${row.id}`}>
-                        <span>
-                          <FiEdit size={20} />
-                        </span>
-                      </Link>
-                      <button
-                        type="button"
-                        onClick={() => handleDelete(row.id)}
-                      >
-                        <span>
-                          <FiTrash2 size={20} />
-                        </span>
-                      </button>
-                    </S.Actions>
+              {debits.length > 0 ? (
+                debits.map(row => (
+                  <TableRow key={row.id}>
+                    <TableCell align="left">{row.reason}</TableCell>
+                    <TableCell align="left">{row.value}</TableCell>
+                    <TableCell align="left">{row.date}</TableCell>
+                    <TableCell align="center">
+                      <S.Actions>
+                        <Link to={`/debit/${row.id}`}>
+                          <span>
+                            <FiEdit size={20} />
+                          </span>
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() => handleDelete(row.id)}
+                        >
+                          <span>
+                            <FiTrash2 size={20} />
+                          </span>
+                        </button>
+                      </S.Actions>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={6} align="center">
+                    Nenhum registro encontrado
                   </TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
         </TableContainer>
