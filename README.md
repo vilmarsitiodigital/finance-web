@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="Vilmar Batista" src="https://res.cloudinary.com/vilmarbatista/image/upload/v1615811000/Development/GoStack/Wallpaper_Keep_Coding_-_2560x1080_kbn7wt.jpg" width="100%" />
+  <img alt="GoStack" src="https://res.cloudinary.com/vilmarbatista/image/upload/v1616082691/Development/Agiotech/logo_onmr4w.png" width="500px" />
 </h1>
 
 <h3 align="center">
