@@ -1,4 +1,3 @@
-import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -8,66 +7,15 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { FiZoomIn, FiTrash2 } from 'react-icons/fi';
-import api from '../../services/api';
+import { useLoadDebits, useDeleteDebits } from './hooks';
+import heads from './data/heads.json';
 
 import * as S from './styles';
 import Button from '../../components/Button';
 
-interface IUsers {
-  id: number;
-  name: string;
-}
-
-interface IDebit {
-  id: number;
-  user_id: number;
-  value: number;
-  name: string;
-}
-
 const Dashboard: React.FC = () => {
-  const [debits, setDebits] = useState<IDebit[]>([]);
-  useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(response => response.json())
-      .then(async (responseUsers: IUsers[]) => {
-        const { data: responseDebits } = await api.get<IDebit[]>('/debits');
-        const ids: number[] = [];
-        const result: IDebit[] = [];
-
-        responseDebits.forEach(({ user_id, value }) => {
-          if (user_id) {
-            const idSelecionado = ids.indexOf(user_id);
-            if (!result[idSelecionado]) {
-              ids.push(user_id);
-              const user = responseUsers.find(({ id }) => id === user_id);
-              if (user) {
-                result.push({
-                  id: user?.id,
-                  user_id,
-                  value,
-                  name: user.name,
-                });
-              }
-            } else {
-              result[idSelecionado].value += value;
-            }
-          }
-        });
-        setDebits(result);
-      });
-  }, []);
-
-  const handleDelete = useCallback(
-    (user_id: number) => {
-      api.delete(`/debits/all/${user_id}`);
-      const newDebits = debits.filter(d => d.user_id !== user_id);
-      setDebits(newDebits);
-    },
-    [debits],
-  );
-
-  const heads = ['Cliente', 'Dívida', ''];
+  const { data: debits, handleSetDebitById } = useLoadDebits();
+  const { handleDelete } = useDeleteDebits({ handleSetDebitById });
 
   return (
     <S.Container>
@@ -109,7 +57,9 @@ const Dashboard: React.FC = () => {
                         </Link>
                         <button
                           type="button"
-                          onClick={() => handleDelete(row.user_id)}
+                          onClick={() => {
+                            handleDelete(row.user_id);
+                          }}
                         >
                           <span>
                             <FiTrash2 size={20} />
