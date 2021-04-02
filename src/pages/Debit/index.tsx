@@ -1,145 +1,27 @@
-import React, { useRef, useCallback, useState, useEffect } from 'react';
-import { FiArrowLeft } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
-import * as Yup from 'yup';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import React, { useRef } from 'react';
+import { FiArrowLeft } from 'react-icons/fi';
+import { Link, useParams } from 'react-router-dom';
 import Select from 'react-select';
-import { format, parseISO } from 'date-fns';
-import api from '../../services/api';
-
-import { useToast } from '../../hooks/toast';
-import getValidationErrors from '../../utils/getValidationErrors';
-
+import Button from '../../components/Button';
 import Input from '../../components/Input';
 import MaskFormat from '../../components/MaskFormat';
-import Button from '../../components/Button';
+import { useLoadOptions, useSubmitForm } from './hooks';
+import { IDebitParams } from './index.d';
 import * as S from './styles';
 
-interface DebitInFormData {
-  user_id: number;
-  reason: string;
-  value: string;
-  date: string;
-}
-
-interface Users {
-  id: number;
-  name: string;
-}
-
-interface IDebit {
-  id: string;
-  user_id: number;
-  value: number;
-  reason: string;
-  date: string;
-  user?: Options;
-}
-
-interface Options {
-  value?: number;
-  label?: string;
-}
-
-interface DebitParams {
-  id: string;
-}
-
 const Debit: React.FC = () => {
-  const params = useParams<DebitParams>();
-  const formRef = useRef<FormHandles>(null);
-  const history = useHistory();
-  const { addToast } = useToast();
-
-  const [debit, setDebit] = useState<IDebit>();
-
-  const [selectedOption, setSelectedOption] = useState<Options>({} as Options);
-  const handleChangeSelect = useCallback(option => {
-    setSelectedOption(option);
-  }, []);
-
-  const [options, setOptions] = useState<Options[]>([]);
-  useEffect(() => {
-    const arrayUsuarios: Options[] = options;
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(response => response.json())
-      .then(json => {
-        json.forEach((j: Users) => {
-          arrayUsuarios.push({ value: j.id, label: j.name });
-        });
-        setOptions(arrayUsuarios);
-      })
-      .then(() => {
-        if (params.id) {
-          api.get<IDebit>(`/debits/show/${params.id}`).then(response => {
-            const debitFormatted = {
-              ...response.data,
-              date: format(parseISO(response.data.date), 'dd/MM/yyyy'),
-              user: options.find(u => u.value === response.data.user_id),
-            };
-            setDebit(debitFormatted);
-
-            const optSelected = {
-              value: debitFormatted.user_id,
-              label: debitFormatted?.user?.label,
-            } as Options;
-            setSelectedOption(optSelected);
-          });
-        }
-      });
-  }, [debit?.date, debit?.user_id, options, params.id]);
-
-  const handleSubmit = useCallback(
-    async (data: DebitInFormData) => {
-      try {
-        formRef.current?.setErrors({});
-        const schema = Yup.object().shape({
-          reason: Yup.string().required('Motivo é obrigatório'),
-          value: Yup.string().required('Valor é obrigatório'),
-          date: Yup.string().required('Data é obrigatória'),
-        });
-
-        await schema.validate(data, { abortEarly: false });
-
-        const { reason, value, date } = data;
-
-        const valorFormatado = parseFloat(
-          value.replace('.', '').replace(',', '.'),
-        );
-
-        const formData = {
-          user_id: selectedOption.value,
-          reason,
-          value: valorFormatado,
-          date,
-        };
-
-        if (params.id) {
-          await api.put(`/debits/${params.id}`, formData);
-        } else {
-          await api.post('/debits', formData);
-        }
-
-        history.push('/');
-      } catch (err) {
-        if (err instanceof Yup.ValidationError) {
-          const errors = getValidationErrors(err);
-
-          formRef.current?.setErrors(errors);
-          return;
-        }
-
-        addToast({
-          type: 'error',
-          title: 'Erro na autenticação',
-          description:
-            'Ocorreu um error ao cadastrar o débito, cheque os campos.',
-        });
-      }
-    },
-    [addToast, history, params.id, selectedOption],
+  const params = useParams<IDebitParams>();
+  const { options, selectedOption, handleChangeSelect, debit } = useLoadOptions(
+    params.id,
   );
+  const formRef = useRef<FormHandles>(null);
+  const { handleSubmit } = useSubmitForm({
+    formRef,
+    selectedOption,
+    debitId: params?.id,
+  });
 
   return (
     <S.Container>
